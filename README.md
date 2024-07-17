@@ -1,36 +1,110 @@
-## OpenCV: Open Source Computer Vision Library
+# Integrate OpenCV to Open Harmony4.1_release
 
+ 
+Pre-requisite：rk3568, OpenHarmony4.1 standard system，Compile on Ubuntu20.04 LTS
 
-### Resources
+1. Download OpenCV Library
 
-* Homepage: <https://opencv.org>
-  * Courses: <https://opencv.org/courses>
-* Docs: <https://docs.opencv.org/4.x/>
-* Q&A forum: <https://forum.opencv.org>
-  * previous forum (read only): <http://answers.opencv.org>
-* Issue tracking: <https://github.com/opencv/opencv/issues>
-* Additional OpenCV functionality: <https://github.com/opencv/opencv_contrib>
-* Donate to OpenCV: <https://opencv.org/support/>
+Link：[OpenHarmony-SIG/third_party_opencv](https://gitee.com/openharmony-sig/third_party_opencv)
 
+2.  Add the library to the third_party directory
 
-### Contributing
+Put opencv under the `third_party` directory. Keep cautious about the directory name!
 
-Please read the [contribution guidelines](https://github.com/opencv/opencv/wiki/How_to_contribute) before starting work on a pull request.
+Modify `vendor/hihope/config.json`. Add new component, opncv, under thirdparty subsystem and its corresponding information.
+``` json
+{
+      "subsystem": "thirdparty",
+      "components": [
+        {
+          "component": "libuv",
+          "features": [
+            "use_ffrt = true"
+          ]
+        },
+        {
+          "component": "wpa_supplicant",
+          "features": [
+            "wpa_supplicant_driver_nl80211 = true"
+          ]
+        },
+        {
+          "component": "opencv",
+          "features":[]
+        }
+      ]
+    },
+```
 
-#### Summary of the guidelines:
+3. Compile the code
 
-* One pull request per issue;
-* Choose the right base branch;
-* Include tests and documentation;
-* Clean up "oops" commits before submitting;
-* Follow the [coding style guide](https://github.com/opencv/opencv/wiki/Coding_Style_Guide).
+Compile tutorial: [Tutorial](https://docs.openharmony.cn/pages/v4.0/zh-cn/device-dev/device-dev-guide.md)
 
-### Additional Resources
+4. Debugging
 
-* [Submit your OpenCV-based project](https://form.jotform.com/233105358823151) for inclusion in Community Friday on opencv.org
-* [Subscribe to the OpenCV YouTube Channel](http://youtube.com/@opencvofficial) featuring OpenCV Live, an hour-long streaming show
-* [Follow OpenCV on LinkedIn](http://linkedin.com/company/opencv/) for daily posts showing the state-of-the-art in computer vision & AI
-* [Apply to be an OpenCV Volunteer](https://form.jotform.com/232745316792159) to help organize events and online campaigns as well as amplify them
-* [Follow OpenCV on Mastodon](http://mastodon.social/@opencv) in the Fediverse
-* [Follow OpenCV on Twitter](https://twitter.com/opencvlive)
-* [OpenCV.ai](https://opencv.ai): Computer Vision and AI development services from the OpenCV team.
+Bug1
+
+Exception: //third_party/opencv/3rdparty/ffmpeg/libavcodec:opencv_ffmpeg_avcodec depend part //third_party/opencv/3rdparty/ffmpeg/libavutil:libopencv_avutil, need set part deps opencv info to /home/hzk/Documents/OH4.1/OpenHarmony-v4.1-Release/OpenHarmony/build/bundle.json.
+修改方法：build的bundle.json中deps和third_party修改如下
+```json
+ "deps": {
+      "components": [],
+        "third_party": [
+        "musl",
+        "markupsafe",
+        "jinja2",
+        "e2fsprogs",
+        "f2fs-tools",
+        "opencv"
+      ]
+    },
+    "build": {
+      "sub_component": [
+        "//build/common:common_packages",
+        "//build/rust:default",
+        "//third_party/f2fs-tools:f2fs-tools_host_toolchain",
+        "//third_party/opencv/3rdparty/ffmpeg/libavutil:libopencv_avutil",
+        "//third_party/opencv/3rdparty/ffmpeg/libswresample:libopencv_swresample"
+      ],
+    }
+```
+Bug2
+
+[OHOS ERROR] Exception: //third_party/opencv/napi:opencv_napi depend part //third_party/bounds_checking_function:libsec_static, need set part deps bounds_checking_function info to /home/hzk/Documents/OH4.1/OpenHarmony-v4.1-Release/OpenHarmony/third_party/opencv/bundle.json.
+
+Solution：add `bounds_checking_function`and `libuv` to 'opencv/bundle.json', clear the derivative path in 'third_party' section
+ 
+```json
+"deps": {
+        "components": [
+            "ability_base",
+            "ability_runtime",
+            "access_token",
+            "bundle_framework",
+            "c_utils",
+            "certificate_manager",
+            "common_event_service",
+            "hisysevent",
+            "hilog",
+            "huks",
+            "ipc",
+            "napi",
+            "netmanager_base",
+            "safwk",
+            "samgr",
+            "data_share",
+            "hdf_core",
+            "hicollie",
+            "relational_store",
+            "bounds_checking_function",
+            "libuv"
+        ],
+        "third_party": [
+            "bounds_checking_function",
+            "libuv"
+        ]
+      },
+```
+---
+
+For details and mandarian tutorial, please refer to my blog on [csdn](https://blog.csdn.net/weixin_64726009/article/details/140493002?spm=1001.2014.3001.5502).
