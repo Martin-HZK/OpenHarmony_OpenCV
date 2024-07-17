@@ -45,7 +45,8 @@ Compile tutorial: [Tutorial](https://docs.openharmony.cn/pages/v4.0/zh-cn/device
 Bug1
 
 Exception: //third_party/opencv/3rdparty/ffmpeg/libavcodec:opencv_ffmpeg_avcodec depend part //third_party/opencv/3rdparty/ffmpeg/libavutil:libopencv_avutil, need set part deps opencv info to /home/hzk/Documents/OH4.1/OpenHarmony-v4.1-Release/OpenHarmony/build/bundle.json.
-修改方法：build的bundle.json中deps和third_party修改如下
+
+Solution: modify the build/bundle.json
 ```json
  "deps": {
       "components": [],
