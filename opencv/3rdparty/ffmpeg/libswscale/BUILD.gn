@@ -1,0 +1,56 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# swscale build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/3rdparty/ffmpeg/ffmpeg_build_common.gni")
+
+config("ffmpeg_swscale") {
+    cflags = ffmpeg_common_cflags
+}
+
+ohos_source_set("opencv_ffmpeg_swscale") {
+    sources = [
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/gamma.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/hscale.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/vscale.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/input.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/slice.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/swscale_unscaled.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/alphablend.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/options.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/swscale.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/rgb2rgb.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/utils.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/yuv2rgb.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/output.c",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/hscale_fast_bilinear.c",
+        #"//third_party/opencv/3rdparty/ffmpeg/libswscale/log2_tab.c",
+
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/ffmpeg/",
+        "//third_party/opencv/3rdparty/ffmpeg/libswscale/",
+        "//third_party/opencv/3rdparty/ffmpeg/include",
+        "//third_party/opencv/3rdparty/ffmpeg/libavutil",
+    ]
+    deps = [ "//third_party/opencv/3rdparty/ffmpeg/libavutil:libopencv_avutil" ]
+    configs = [":ffmpeg_swscale"]
+}
+
+ohos_shared_library("libopencv_swscale") {
+    deps = [ ":opencv_ffmpeg_swscale" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

@@ -1,0 +1,66 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv videoio test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_videoio_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+    defines += [
+        "ENABLE_PLUGINS",
+        "HAVE_CAMV4L2",
+        "HAVE_FFMPEG",
+    ]
+}
+
+ohos_executable("opencv_test_videoio") {
+    configs = [":opencv_videoio_test_config"]
+    sources = [
+        "//third_party/opencv/modules/videoio/test/test_audio.cpp",
+        "//third_party/opencv/modules/videoio/test/test_camera.cpp",
+        "//third_party/opencv/modules/videoio/test/test_container_avi.cpp",
+        "//third_party/opencv/modules/videoio/test/test_dynamic.cpp",
+        "//third_party/opencv/modules/videoio/test/test_ffmpeg.cpp",
+        "//third_party/opencv/modules/videoio/test/test_gstreamer.cpp",
+        "//third_party/opencv/modules/videoio/test/test_main.cpp",
+        "//third_party/opencv/modules/videoio/test/test_mfx.cpp",
+        "//third_party/opencv/modules/videoio/test/test_microphone.cpp",
+        "//third_party/opencv/modules/videoio/test/test_plugins.cpp",
+        "//third_party/opencv/modules/videoio/test/test_video_io.cpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/highgui/include",
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

@@ -1,0 +1,84 @@
+{
+    "name": "@ohos/opencv",
+    "description": "opencv napi interface",
+    "version": "3.1",
+    "license": "Apache License 2.0",
+    "publishAs": "code-segment",
+    "segment": {
+      "destPath": "third_party/opencv"
+    },
+    "dirs": {},
+    "scripts": {},
+    "licensePath": "LICENSE",
+    "component": {
+      "name": "opencv",
+      "subsystem": "thirdparty",
+      "syscap": [],
+      "features": [],
+      "adapted_system_type": [
+        "standard"
+      ],
+      "rom": "",
+      "ram": "",
+      "deps": {
+        "components": [
+            "ability_base",
+            "ability_runtime",
+            "access_token",
+            "bundle_framework",
+            "c_utils",
+            "certificate_manager",
+            "common_event_service",
+            "hisysevent",
+            "hilog",
+            "huks",
+            "ipc",
+            "napi",
+            "netmanager_base",
+            "safwk",
+            "samgr",
+            "data_share",
+            "hdf_core",
+            "hicollie",
+            "relational_store",
+            "bounds_checking_function",
+            "libuv"
+        ],
+        "third_party": [
+            "bounds_checking_function",
+            "libuv"
+        ]
+      },
+      "build": {
+        "sub_component": [
+          "//third_party/opencv/modules/core:libopencv_core",
+          "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+          "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+          "//third_party/opencv/modules/photo:libopencv_photo",
+          "//third_party/opencv/modules/videoio:libopencv_videoio",
+          "//third_party/opencv/modules/flann:libopencv_flann",
+          "//third_party/opencv/modules/features2d:libopencv_features2d",
+          "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+          "//third_party/opencv/modules/video:libopencv_video",
+          "//third_party/opencv/modules/highgui:libopencv_highgui",
+          "//third_party/opencv/modules/ml:libopencv_ml",
+          "//third_party/opencv/modules/stitching:libopencv_stitching",
+          "//third_party/opencv/modules/dnn:libopencv_dnn",
+          "//third_party/opencv/modules/objdetect:libopencv_objdetect",
+          "//third_party/opencv/modules/gapi:libopencv_gapi",
+          "//third_party/opencv/napi:opencv_napi",
+          "//third_party/opencv/modules/ts:libopencv_ts" 
+        ],
+        "inner_kits": [
+            {
+                "name": "//third_party/opencv:opencv",
+                "header": {
+                  "header_files": [],
+                  "header_base": "//third_party/opencv/include"
+                }
+              }
+        ],
+        "test": []
+      }
+    }
+  }

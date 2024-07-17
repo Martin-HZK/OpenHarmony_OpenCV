@@ -1,0 +1,125 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv carotene build
+
+import("//build/ohos.gni")
+
+config("carotene_config") {
+    cflags_cc = [
+        "-Wextra",
+        "-Wno-unused-function",
+        "-Wno-unused-variable",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-sometimes-uninitialized",
+        "-frtti",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-Wno-incompatible-pointer-types",
+        "-Werror",
+        "-Wimplicit-function-declaration",
+        "-fno-tree-vectorize",
+        "-fno-unwind-tables",
+        "-fwrapv",  
+        "-fPIC",
+        "-std=c++11",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+    ]
+    defines = [
+        "__OPENCV_BUILD=true",
+        "CAROTENE_NS=carotene_o4t",
+        "__ARM_NEON__",
+    ]
+}
+
+ohos_source_set("opencv_carotene_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/carotene/src/absdiff.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/accumulate.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/add.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/add_weighted.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/bitwise.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/blur.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/canny.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/channel_extract.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/channels_combine.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/cmp.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/colorconvert.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/common.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/convert.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/convert_depth.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/convert_scale.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/convolution.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/count_nonzero.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/div.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/dot_product.cpp",
+        "//third_party/opencv/3rdparty/carotene/hal/dummy.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/fast.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/fill_minmaxloc.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/flip.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/gaussian_blur.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/in_range.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/integral.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/laplacian.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/magnitude.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/meanstddev.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/median_filter.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/min_max.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/minmaxloc.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/morph.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/mul.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/norm.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/opticalflow.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/phase.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/pyramid.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/reduce.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/remap.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/resize.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/scharr.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/separable_filter.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/sobel.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/sub.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/sum.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/template_matching.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/threshold.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/warp_affine.cpp",
+        "//third_party/opencv/3rdparty/carotene/src/warp_perspective.cpp"
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/carotene/include",
+        "//third_party/opencv/3rdparty/carotene/src",
+    ]
+    #deps = [":prebuild_header_copy"]
+
+    configs = [ ":carotene_config" ]
+}
+
+ohos_static_library("libtegra_hal") {
+    deps = [ ":opencv_carotene_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
+action("prebuild_header_copy") {
+    script = "//third_party/opencv/pre_header_file_copy.py"
+    outputs = ["$root_out_dir/prebuild_copy_log.txt"]
+    src_file = rebase_path("//third_party/opencv/.pre_build")
+    dest_file = rebase_path("//third_party/opencv/build")
+    args = [
+        "--src_file=$src_file",
+        "--dest_file=$dest_file",
+    ]
+}

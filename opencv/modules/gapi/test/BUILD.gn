@@ -1,0 +1,155 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv photo test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_gapi_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+}
+
+ohos_executable("opencv_test_gapi") {
+    configs = [":opencv_gapi_test_config"]
+    sources = [
+        "//third_party/opencv/modules/gapi/test/common/gapi_compoundkernel_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_core_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_imgproc_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_operators_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_render_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_stereo_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/common/gapi_video_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_core_tests_cpu.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_core_tests_fluid.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_imgproc_tests_cpu.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_imgproc_tests_fluid.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_ocv_stateful_kernel_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_operators_tests_cpu.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_operators_tests_fluid.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_stereo_tests_cpu.cpp",
+        "//third_party/opencv/modules/gapi/test/cpu/gapi_video_tests_cpu.cpp",
+        "//third_party/opencv/modules/gapi/test/executor/gtbbexecutor_internal_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_array_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_async_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_basic_hetero_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_compile_args_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_desc_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_fluid_parallel_rois_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_fluid_resize_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_fluid_roi_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_fluid_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_fluid_test_kernels.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_frame_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_gcompiled_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_gcomputation_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_gpu_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_graph_meta_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_kernel_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_opaque_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_plaidml_pipelines.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_planar_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_sample_pipelines.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_scalar_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_smoke_test.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_transform_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_typed_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gapi_util_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/gpu/gapi_core_tests_gpu.cpp",
+        "//third_party/opencv/modules/gapi/test/gpu/gapi_imgproc_tests_gpu.cpp",
+        "//third_party/opencv/modules/gapi/test/gpu/gapi_operators_tests_gpu.cpp",
+        "//third_party/opencv/modules/gapi/test/infer/gapi_infer_ie_test.cpp",
+        "//third_party/opencv/modules/gapi/test/infer/gapi_infer_onnx_test.cpp",
+        "//third_party/opencv/modules/gapi/test/infer/gapi_infer_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_backend_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_dynamic_graph.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_executor_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_garg_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_gmetaarg_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_gmodel_builder_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_island_fusion_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_island_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_pattern_matching_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_perform_substitution_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_proto_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_recompilation_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_int_vectorref_test.cpp",
+        "//third_party/opencv/modules/gapi/test/internal/gapi_transactions_test.cpp", 
+        "//third_party/opencv/modules/gapi/test/own/conc_queue_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/own/gapi_types_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/own/last_written_value_tests.cpp", 
+        "//third_party/opencv/modules/gapi/test/own/mat_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/own/scalar_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/render/ftp_render_test.cpp",
+        "//third_party/opencv/modules/gapi/test/render/gapi_render_tests_ocv.cpp",
+        "//third_party/opencv/modules/gapi/test/rmat/rmat_integration_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/rmat/rmat_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/rmat/rmat_view_tests.cpp", 
+        "//third_party/opencv/modules/gapi/test/s11n/gapi_s11n_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/s11n/gapi_sample_pipelines_s11n.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_gstreamer_pipeline_facade_int_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_gstreamersource_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_sync_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_utils_test.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_vpl_core_test.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_vpl_data_provider.cpp",
+        "//third_party/opencv/modules/gapi/test/streaming/gapi_streaming_vpl_device_selector.cpp",
+        "//third_party/opencv/modules/gapi/test/test_main.cpp",
+        "//third_party/opencv/modules/gapi/test/util/any_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/util/optional_tests.cpp",
+        "//third_party/opencv/modules/gapi/test/util/variant_tests.cpp",
+        
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/gapi/test",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/gapi/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/dnn/include",
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/modules/video/include",
+        "//third_party/opencv/modules/highgui/include",
+        "//third_party/opencv/modules/gapi/src",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/include",
+
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/gapi:libopencv_gapi",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/video:libopencv_video",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/dnn:libopencv_dnn",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/core:libopencv_core",
+        
+        "//third_party/opencv/3rdparty/ade:libopencv_ade",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

@@ -1,0 +1,110 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv libtiff build
+
+import("//build/ohos.gni")
+
+config("libtiff_config") {
+    cflags_cc = [
+        "-Wextra",
+        "-Wno-unused-function",
+        "-Wno-unused-variable",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-sometimes-uninitialized",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-Wno-incompatible-pointer-types",
+        "-Werror",
+        "-Wimplicit-function-declaration",
+        "-fno-tree-vectorize",
+        "-fno-unwind-tables",
+        "-fwrapv",  
+        "-fPIC",
+        "-Wno-unused-parameter",
+        "-Wno-sign-compare",
+        "-Wno-shorten-64-to-32",
+        "-Wno-implicit-fallthrough",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+    ]
+    defines = ["__ARM_NEON__",]
+}
+
+ohos_source_set("opencv_libtiff_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/libtiff/tif_close.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_dirread.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_fax3sm.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_luv.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_packbits.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_strip.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_warning.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_codec.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_dirwrite.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_flush.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_lzma.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_pixarlog.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_swab.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_webp.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_color.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_dumpmode.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_getimage.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_lzw.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_predict.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_thunder.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_write.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_compress.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_error.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_jbig.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_next.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_print.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_tile.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_zip.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_dir.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_extension.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_jpeg_12.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_ojpeg.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_read.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_unix.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_zstd.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_aux.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_dirinfo.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_fax3.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_jpeg.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_open.c",
+        "//third_party/opencv/3rdparty/libtiff/tif_stream.cxx",
+        "//third_party/opencv/3rdparty/libtiff/tif_version.c",
+    ]
+    include_dirs = [ 
+        "//third_party/opencv/3rdparty/libtiff",
+        "//third_party/opencv/build/3rdparty/libtiff",
+        "//third_party/opencv/3rdparty/zlib",
+        "//third_party/opencv/build/3rdparty/libjpeg-turbo",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src",
+    ]
+    deps = [  
+        "//third_party/opencv/3rdparty/zlib:libopencv_zlib",
+        "//third_party/opencv/3rdparty/libjpeg-turbo:libjpeg-turbo"
+    ]
+    configs = [ ":libtiff_config" ]
+}
+
+ohos_static_library("libopencv_tiff") {
+    deps = [ ":opencv_libtiff_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

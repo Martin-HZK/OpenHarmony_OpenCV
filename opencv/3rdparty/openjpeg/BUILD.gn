@@ -1,0 +1,91 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv 3rtparty protobuf build
+
+import("//build/ohos.gni")
+
+config("opencv_openjpeg_config") {
+    cflags = [
+        "-Wextra",
+        "-fPIC",
+        "-frtti",
+        "-Wno-delete-non-virtual-dtor",
+        "-Wno-unnamed-type-template-args",
+        "-Wno-comment",
+        "-Wno-deprecated-enum-enum-conversion",
+        "-Wno-deprecated-anon-enum-enum-conversion",
+        "-Wno-implicit-const-int-float-conversion",
+        "-Wno-undef",
+        "-Wno-strict-prototypes",
+        "-Wno-cast-function-type",
+        "-Wno-shadow",
+        "-Wno-unused-function",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+        "-Wno-unknown-warning-option",
+        "-Wno-implicit-fallthrough",
+        "-Wno-implicit-int-float-conversion"
+    ]
+    cflags_cc = cflags
+    cflags_cc += ["-std=c++11"]
+
+    defines = [
+        "MUTEX_pthread",
+        "OPJ_STATIC",
+        "__ARM_NEON__",
+    ]
+}
+
+ohos_source_set("opencv_openjpeg_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/bio.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/cio.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/dwt.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/event.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/function_list.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/image.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/invert.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/j2k.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/jp2.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/mct.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/mqc.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/openjpeg.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/opj_clock.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/opj_malloc.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/pi.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/sparse_array.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/t1.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/t2.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/tcd.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/tgt.c",
+        "//third_party/opencv/3rdparty/openjpeg/openjp2/thread.c",
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/openjpeg/openjp2",
+        "//third_party/opencv/3rdparty/openjpeg",
+        "//third_party/opencv/build/3rdparty/openjpeg/openjp2",
+    ]
+
+    deps = ["//third_party/opencv/3rdparty/carotene:libtegra_hal",]
+
+    configs = [ ":opencv_openjpeg_config" ]
+}
+
+ohos_static_library("libopencv_openjpeg") {
+    deps = [ ":opencv_openjpeg_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+

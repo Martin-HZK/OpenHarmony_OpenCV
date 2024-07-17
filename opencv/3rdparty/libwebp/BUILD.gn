@@ -1,0 +1,178 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv libwebp build
+
+import("//build/ohos.gni")
+
+config("libwebp_config") {
+    cflags_cc = [
+        "-Wextra",
+        "-Wno-unused-function",
+        "-Wno-unused-variable",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-sometimes-uninitialized",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-Wno-incompatible-pointer-types",
+        "-Werror",
+        "-Wimplicit-function-declaration",
+        "-fno-tree-vectorize",
+        "-fno-unwind-tables",
+        "-fwrapv",  
+        "-fPIC",
+        "-Wno-unused-parameter",
+        "-Wno-sign-compare",
+        "-Wno-shorten-64-to-32",
+        "-Wno-implicit-fallthrough",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+    ]
+    defines = [
+        "WEBP_USE_THREAD",
+        "__ARM_NEON__",
+    ]
+}
+
+ohos_source_set("opencv_libwebp_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/libwebp/src/dec/alpha_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/buffer_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/frame_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/idec_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/io_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/quant_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/tree_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/vp8_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/vp8l_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dec/webp_dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/demux/anim_decode.c",
+        "//third_party/opencv/3rdparty/libwebp/src/demux/demux.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/alpha_processing.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_clip_tables.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/alpha_processing_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/alpha_processing_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/alpha_processing_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/alpha_processing_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/filters.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cost.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/filters_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/ssim.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cost_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/filters_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/ssim_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cost_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/dec_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/filters_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/yuv_sse41.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cost_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/filters_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cost_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_mips32.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_sse2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling_msa.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/cpu.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/enc_mips_dsp_r2.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/lossless_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/rescaler.c",
+        "//third_party/opencv/3rdparty/libwebp/src/dsp/upsampling_neon.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/alpha_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/config_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/histogram_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/picture_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/predictor_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/tree_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/analysis_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/cost_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/iterator_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/picture_psnr_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/quant_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/vp8l_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/backward_references_cost_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/filter_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/near_lossless_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/picture_rescale_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/syntax_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/webp_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/backward_references_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/frame_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/picture_csp_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/picture_tools_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/enc/token_enc.c",
+        "//third_party/opencv/3rdparty/libwebp/src/mux/anim_encode.c",
+        "//third_party/opencv/3rdparty/libwebp/src/mux/muxedit.c",
+        "//third_party/opencv/3rdparty/libwebp/src/mux/muxinternal.c",
+        "//third_party/opencv/3rdparty/libwebp/src/mux/muxread.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/bit_reader_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/color_cache_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/huffman_encode_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/quant_levels_dec_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/random_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/thread_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/bit_writer_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/filters_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/huffman_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/quant_levels_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/rescaler_utils.c",
+        "//third_party/opencv/3rdparty/libwebp/src/utils/utils.c"
+    ]
+    include_dirs = [ 
+        "//third_party/opencv/3rdparty/libwebp",
+    ]
+    deps = []
+    configs = [ ":libwebp_config" ]
+}
+
+ohos_static_library("libopencv_webp") {
+    deps = [ ":opencv_libwebp_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

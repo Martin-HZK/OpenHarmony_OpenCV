@@ -1,0 +1,49 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv flann build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_flann_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+}
+
+ohos_source_set("opencv_flann_source") {
+    sources = [
+        "//third_party/opencv/modules/flann/src/flann.cpp",
+        "//third_party/opencv/modules/flann/src/miniflann.cpp",
+        "//third_party/opencv/modules/flann/src/precomp.hpp"
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/build"
+    ]
+
+    deps = [  
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+
+    configs = [ ":opencv_flann_config" ]
+}
+
+ohos_shared_library("libopencv_flann") {
+    deps = [ ":opencv_flann_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

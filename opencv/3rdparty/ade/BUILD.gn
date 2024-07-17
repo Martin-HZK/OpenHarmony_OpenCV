@@ -1,0 +1,69 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv dnn build
+
+import("//build/ohos.gni")
+
+config("opencv_ade_config") {
+    cflags_cc = [
+        "-Wno-delete-non-virtual-dtor",
+        "-Wno-unnamed-type-template-args",
+        "-Wno-comment",
+        "-Wno-deprecated-enum-enum-conversion",
+        "-Wno-deprecated-anon-enum-enum-conversion",
+        "-fdiagnostics-show-option",
+        "-pthread",
+        "-fPIC",
+        "-std=c++11",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+    ]
+    defines = ["__ARM_NEON__"]
+}
+
+ohos_source_set("opencv_ade_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/alloc.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/assert.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/check_cycles.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/edge.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/execution_engine.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/graph.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_accessor.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor_ref.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor_view.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/metadata.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/metatypes.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/node.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/search.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/subgraphs.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/topological_sort.cpp",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/source/passes/communications.cpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/include",
+    ]
+
+    deps = []
+
+    configs = [ ":opencv_ade_config" ]
+}
+
+ohos_static_library("libopencv_ade") {
+    deps = [ ":opencv_ade_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

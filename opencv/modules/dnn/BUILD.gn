@@ -1,0 +1,287 @@
+# Copyright (c) 2022 Shenzhen Kaihong libopenglDigital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv dnn build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_dnn_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+    defines += [
+        "CV_OCL4DNN=1",
+        "HAVE_PROTOBUF=1",
+    ]
+}
+
+action("ocv_cl2cpp_dnn") {
+    script = "//third_party/opencv/build_cpp_from_cl.py"
+    outputs = [
+        "$target_out_dir/opencl_kernels_dnn.cpp",
+        "$target_out_dir/opencl_kernels_dnn.hpp",
+    ]
+    cl_path = rebase_path("//third_party/opencv/modules/dnn/src/opencl")
+    save_path = rebase_path("$target_out_dir")
+    module_name = "dnn"
+    args = [
+        "--cl_path=$cl_path",
+        "--save_path=$save_path",
+        "--module_name=$module_name",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}
+
+ohos_source_set("opencv_dnn_source") {
+    sources = [
+        "//third_party/opencv/modules/dnn/misc/caffe/opencv-caffe.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/onnx/opencv-onnx.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/attr_value.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/function.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/graph.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/op_def.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/tensor.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/tensor_shape.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/types.pb.cc",
+        "//third_party/opencv/modules/dnn/misc/tensorflow/versions.pb.cc",
+        "//third_party/opencv/modules/dnn/src/caffe/caffe_importer.cpp",
+        "//third_party/opencv/modules/dnn/src/caffe/caffe_io.cpp",
+        "//third_party/opencv/modules/dnn/src/caffe/caffe_shrinker.cpp",
+        "//third_party/opencv/modules/dnn/src/darknet/darknet_importer.cpp",
+        "//third_party/opencv/modules/dnn/src/darknet/darknet_io.cpp",
+        "//third_party/opencv/modules/dnn/src/debug_utils.cpp",
+        "//third_party/opencv/modules/dnn/src/dnn.cpp",
+        "//third_party/opencv/modules/dnn/src/graph_simplifier.cpp",
+        "//third_party/opencv/modules/dnn/src/halide_scheduler.cpp",
+        "//third_party/opencv/modules/dnn/src/ie_ngraph.cpp",
+        "//third_party/opencv/modules/dnn/src/init.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/batch_norm_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/convolution_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/elementwise_layers.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/eltwise_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/fully_connected_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/pooling_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/quantization_utils.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/scale_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/softmax_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/accum_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/arg_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/batch_norm_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/blank_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/concat_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/const_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/convolution_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/correlation_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/crop_and_resize_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/cumsum_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/detection_output_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/elementwise_layers.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/eltwise_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/flatten_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/flow_warp_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/fully_connected_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/layers_common.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/lrn_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/max_unpooling_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/mvn_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/normalize_bbox_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/not_implemented_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/padding_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/permute_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/pooling_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/prior_box_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/proposal_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/recurrent_layers.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/region_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/reorg_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/reshape_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/resize_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/scale_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/shuffle_channel_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/slice_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/softmax_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/layers/split_layer.cpp",
+        "//third_party/opencv/modules/dnn/src/model.cpp",
+        "//third_party/opencv/modules/dnn/src/nms.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/common.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/math_functions.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/ocl4dnn_conv_spatial.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/ocl4dnn_inner_product.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/ocl4dnn_lrn.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/ocl4dnn_pool.cpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/src/ocl4dnn_softmax.cpp",
+        "//third_party/opencv/modules/dnn/src/onnx/onnx_graph_simplifier.cpp",
+        "//third_party/opencv/modules/dnn/src/onnx/onnx_importer.cpp",
+        "//third_party/opencv/modules/dnn/src/op_halide.cpp",
+        "//third_party/opencv/modules/dnn/src/op_inf_engine.cpp",
+        "//third_party/opencv/modules/dnn/src/op_vkcom.cpp",
+        "//third_party/opencv/modules/dnn/src/op_webnn.cpp",
+        "//third_party/opencv/modules/dnn/src/tengine4dnn/src/tengine_graph_convolution.cpp",
+        "//third_party/opencv/modules/dnn/src/tensorflow/tf_graph_simplifier.cpp",
+        "//third_party/opencv/modules/dnn/src/tensorflow/tf_importer.cpp",
+        "//third_party/opencv/modules/dnn/src/tensorflow/tf_io.cpp",
+        "//third_party/opencv/modules/dnn/src/torch/THDiskFile.cpp",
+        "//third_party/opencv/modules/dnn/src/torch/THFile.cpp",
+        "//third_party/opencv/modules/dnn/src/torch/THGeneral.cpp",
+        "//third_party/opencv/modules/dnn/src/torch/torch_importer.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/avg_pool_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/concat_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/conv48_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/conv_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/dw_conv_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/lrn_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/max_pool_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/permute_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/prior_box_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/relu_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/softmax_spv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/buffer.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/context.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/internal.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_base.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_concat.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_conv.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_lrn.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_permute.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_pool.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_prior_box.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_relu.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/op_softmax.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/tensor.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/vulkan/vk_functions.cpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/vulkan/vk_loader.cpp",
+        #"//third_party/opencv/build/modules/dnn/opencl_kernels_dnn.cpp",
+        #"//third_party/opencv/build/modules/dnn/opencl_kernels_dnn.hpp",
+        "//third_party/opencv/modules/dnn/src/caffe/caffe_io.hpp",
+        "//third_party/opencv/modules/dnn/src/caffe/glog_emulator.hpp",
+        "//third_party/opencv/modules/dnn/src/darknet/darknet_io.hpp",
+        "//third_party/opencv/modules/dnn/src/dnn_common.hpp",
+        "//third_party/opencv/modules/dnn/src/graph_simplifier.hpp",
+        "//third_party/opencv/modules/dnn/src/halide_scheduler.hpp",
+        "//third_party/opencv/modules/dnn/src/ie_ngraph.hpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/layers_common.hpp",
+        "//third_party/opencv/modules/dnn/src/int8layers/layers_common.simd.hpp",
+        "//third_party/opencv/modules/dnn/src/layers/layers_common.hpp",
+        "//third_party/opencv/modules/dnn/src/layers/layers_common.simd.hpp",
+        "//third_party/opencv/modules/dnn/src/math_utils.hpp",
+        "//third_party/opencv/modules/dnn/src/nms.inl.hpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/include/common.hpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/include/default_kernel_config.hpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/include/math_functions.hpp",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/include/ocl4dnn.hpp",
+        "//third_party/opencv/modules/dnn/src/onnx/onnx_graph_simplifier.hpp",
+        "//third_party/opencv/modules/dnn/src/op_cuda.hpp",
+        "//third_party/opencv/modules/dnn/src/op_halide.hpp",
+        "//third_party/opencv/modules/dnn/src/op_inf_engine.hpp",
+        "//third_party/opencv/modules/dnn/src/op_vkcom.hpp",
+        "//third_party/opencv/modules/dnn/src/op_webnn.hpp",
+        "//third_party/opencv/modules/dnn/src/precomp.hpp",
+        "//third_party/opencv/modules/dnn/src/tengine4dnn/include/tengine_graph_convolution.hpp",
+        "//third_party/opencv/modules/dnn/src/tensorflow/tf_graph_simplifier.hpp",
+        "//third_party/opencv/modules/dnn/src/tensorflow/tf_io.hpp",
+        "//third_party/opencv/modules/dnn/src/torch/THDiskFile.h",
+        "//third_party/opencv/modules/dnn/src/torch/THFile.h",
+        "//third_party/opencv/modules/dnn/src/torch/THFilePrivate.h",
+        "//third_party/opencv/modules/dnn/src/torch/THGeneral.h",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/buffer.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_base.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_concat.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_conv.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_lrn.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_permute.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_pool.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_prior_box.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_relu.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/op_softmax.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/tensor.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/include/vkcom.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/shader/spv_shader.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/common.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/context.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/src/internal.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/vulkan/function_list.inl.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/vulkan/vk_functions.hpp",
+        "//third_party/opencv/modules/dnn/src/vkcom/vulkan/vk_loader.hpp"
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/dnn/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/build/modules/dnn",
+        "//third_party/opencv/build/modules/dnn/layers",
+        "//third_party/opencv/build/modules/dnn/int8layers",
+        "//third_party/opencv/modules/dnn/misc/caffe",
+        "//third_party/opencv/modules/dnn/misc/tensorflow",
+        "//third_party/opencv/modules/dnn/misc/onnx",
+        "//third_party/opencv/3rdparty/include/opencl/1.2",
+        "//third_party/opencv/3rdparty/protobuf/src",
+        "$target_out_dir",
+    ]
+
+    deps = [  
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/3rdparty/protobuf:libopencv_protobuf",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+        #":ocv_build_dispatch_layers",
+        #":ocv_build_dispatch_int8layers",
+        ":ocv_cl2cpp_dnn",
+    ]
+    configs = [ ":opencv_dnn_config" ]
+
+    sources += get_target_outputs(":ocv_cl2cpp_dnn")
+}
+
+ohos_shared_library("libopencv_dnn") {
+    deps = [ ":opencv_dnn_source" ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
+action("ocv_build_dispatch_layers") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/layers_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/dnn/src/layers")
+    save_path = rebase_path("//third_party/opencv/build/modules/dnn/layers")
+    file_name = "layers_common"
+    optimizations = "AVX AVX2 AVX512_SKX RVV"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}
+
+action("ocv_build_dispatch_int8layers") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/int8layers_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/dnn/src/int8layers")
+    save_path = rebase_path("//third_party/opencv/build/modules/dnn/int8layers")
+    file_name = "layers_common"
+    optimizations = "AVX2 AVX512_SKX"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}

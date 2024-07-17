@@ -1,0 +1,206 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv dnn build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_gapi_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+}
+
+ohos_source_set("opencv_gapi_source") {
+    sources = [
+        "//third_party/opencv/modules/gapi/src/api/grunarg.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gorigin.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gmat.cpp",
+        "//third_party/opencv/modules/gapi/src/api/garray.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gopaque.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gscalar.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gframe.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gkernel.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gproto.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gnode.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gcall.cpp",
+        "//third_party/opencv/modules/gapi/src/api/gcomputation.cpp",
+        "//third_party/opencv/modules/gapi/src/api/operators.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_core.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_imgproc.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_video.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_nnparsers.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_streaming.cpp",
+        "//third_party/opencv/modules/gapi/src/api/kernels_stereo.cpp",
+        "//third_party/opencv/modules/gapi/src/api/render.cpp",
+        "//third_party/opencv/modules/gapi/src/api/render_ocv.cpp",
+        "//third_party/opencv/modules/gapi/src/api/ginfer.cpp",
+        "//third_party/opencv/modules/gapi/src/api/media.cpp",
+        "//third_party/opencv/modules/gapi/src/api/rmat.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gmodel.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gmodelbuilder.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gislandmodel.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gcompiler.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gcompiled.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/gstreaming.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/helpers.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/dump_dot.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/islands.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/meta.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/kernels.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/exec.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/transformations.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/pattern_matching.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/perform_substitution.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/streaming.cpp",
+        "//third_party/opencv/modules/gapi/src/compiler/passes/intrin.cpp",
+        "//third_party/opencv/modules/gapi/src/executor/gexecutor.cpp",
+        "//third_party/opencv/modules/gapi/src/executor/gtbbexecutor.cpp",
+        "//third_party/opencv/modules/gapi/src/executor/gstreamingexecutor.cpp",
+        "//third_party/opencv/modules/gapi/src/executor/gasync.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpubackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpukernel.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpuimgproc.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpustereo.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpuvideo.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gcpucore.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/cpu/gnnparsers.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidbuffer.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidimgproc.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidimgproc_func.dispatch.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidcore.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/fluid/gfluidcore_func.dispatch.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ocl/goclbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ocl/goclkernel.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ocl/goclimgproc.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ocl/goclcore.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ie/giebackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ie/giebackend/giewrapper.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/onnx/gonnxbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/render/grenderocv.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/render/ft_render.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/plaidml/gplaidmlcore.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/plaidml/gplaidmlbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/common/gmetabackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/common/gcompoundbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/common/gcompoundkernel.cpp",
+        "//third_party/opencv/modules/gapi/src/api/s11n.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/common/serialization.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/streaming/gstreamingbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/ie/bindings_ie.cpp",
+        "//third_party/opencv/modules/gapi/src/backends/python/gpythonbackend.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/source.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/source_priv.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/file_data_provider.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/cfg_params.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/cfg_params_parser.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/utils.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/data_provider_interface_exception.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/surface/cpu_frame_adapter.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/surface/dx11_frame_adapter.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/surface/surface.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/surface/surface_pool.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/utils/shared_lock.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/accel_policy_cpu.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/accel_policy_dx11.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/accelerators/dx11_alloc_resource.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/engine/engine_session.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/engine/processing_engine_base.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/engine/decode/decode_engine_legacy.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/engine/decode/decode_session.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/demux/async_mfp_demux_data_provider.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/data_provider_dispatcher.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/cfg_param_device_selector.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/onevpl/device_selector_interface.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamer_pipeline_facade.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamerpipeline.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamersource.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamer_buffer_utils.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamer_media_adapter.cpp",
+        "//third_party/opencv/modules/gapi/src/streaming/gstreamer/gstreamerenv.cpp",
+        "//third_party/opencv/modules/gapi/src/utils/itt.cpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/build/modules/gapi",
+        "//third_party/opencv/modules/gapi/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/dnn/include",
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/modules/video/include",
+        "//third_party/opencv/modules/gapi/src",
+        "//third_party/opencv/3rdparty/ittnotify/include",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/include",
+    ]
+
+    deps = [  
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/dnn:libopencv_dnn",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/video:libopencv_video",
+        "//third_party/opencv/3rdparty/ade:libopencv_ade",
+        "//third_party/opencv/3rdparty/ittnotify:libopencv_ittnotify",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+        #":ocv_build_dispatch_gfluidcore_func",
+    ]
+    configs = [ ":opencv_gapi_config" ]
+}
+
+ohos_shared_library("libopencv_gapi") {
+    deps = [ ":opencv_gapi_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
+action("ocv_build_dispatch_gfluidcore_func") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/gfluidcore_func_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/gapi/src/backends/fluid")
+    save_path = rebase_path("//third_party/opencv/build/modules/gapi/backends/fluid")
+    file_name = "gfluidcore_func"
+    optimizations = "SSE4_1 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_gfluidimgproc_func",]
+}
+
+action("ocv_build_dispatch_gfluidimgproc_func") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/gfluidimgproc_func_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/gapi/src/backends/fluid")
+    save_path = rebase_path("//third_party/opencv/build/modules/gapi/backends/fluid")
+    file_name = "gfluidimgproc_func"
+    optimizations = "SSE4_1 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}

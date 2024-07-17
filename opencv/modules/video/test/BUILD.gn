@@ -1,0 +1,62 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv video test build
+
+import("//build/ohos.gni")
+
+ohos_executable("opencv_test_video") {
+    configs = ["//third_party/opencv/modules/video:opencv_video_config"]
+    sources = [
+        "//third_party/opencv/modules/video/test/test_camshift.cpp",
+        "//third_party/opencv/modules/video/test/test_estimaterigid.cpp",
+        "//third_party/opencv/modules/video/test/test_main.cpp",
+        "//third_party/opencv/modules/video/test/test_OF_reproducibility.cpp",
+        "//third_party/opencv/modules/video/test/test_trackers.cpp",
+        "//third_party/opencv/modules/video/test/test_accum.cpp",
+        "//third_party/opencv/modules/video/test/test_ecc.cpp",
+        "//third_party/opencv/modules/video/test/test_kalman.cpp",
+        "//third_party/opencv/modules/video/test/test_OF_accuracy.cpp",
+        "//third_party/opencv/modules/video/test/test_optflowpyrlk.cpp",
+        "//third_party/opencv/modules/video/test/ocl/test_bgfg_mog2.cpp",
+        "//third_party/opencv/modules/video/test/ocl/test_dis.cpp",
+        "//third_party/opencv/modules/video/test/ocl/test_optflow_farneback.cpp",
+        "//third_party/opencv/modules/video/test/ocl/test_optflowpyrlk.cpp",   
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/video/include",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/highgui/include",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/3rdparty/libtiff",
+        "//third_party/opencv/3rdparty/ffmpeg",
+        "//third_party/opencv/build/3rdparty/libtiff"
+    ]
+    deps=[
+        "//third_party/opencv/modules/video:libopencv_video",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/ts:libopencv_ts",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

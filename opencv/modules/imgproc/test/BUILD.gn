@@ -1,0 +1,105 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv imgproc test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_imgproc_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+}
+
+ohos_executable("opencv_test_imgproc") {
+    configs = [":opencv_imgproc_test_config"]
+    sources = [
+        "//third_party/opencv/modules/imgproc/test/ocl/test_accumulate.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_blend.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_boxfilter.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_canny.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_color.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_filter2d.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_filters.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_gftt.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_histogram.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_houghlines.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_imgproc.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_match_template.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_medianfilter.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_pyramids.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_sepfilter2d.cpp",
+        "//third_party/opencv/modules/imgproc/test/ocl/test_warp.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_approxpoly.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_bilateral_filter.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_boundingrect.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_canny.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_color.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_connectedcomponents.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_contours.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_convhull.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_cvtyuv.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_distancetransform.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_drawing.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_emd.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_filter.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_fitellipse.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_fitellipse_ams.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_fitellipse_direct.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_floodfill.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_goodfeaturetotrack.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_grabcut.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_histograms.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_houghcircles.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_houghlines.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_imgproc_umat.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_imgwarp.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_imgwarp_strict.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_intelligent_scissors.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_intersectconvexconvex.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_intersection.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_lsd.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_main.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_moments.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_pc.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_resize_bitexact.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_smooth_bitexact.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_subdivision2d.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_templmatch.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_templmatchmask.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_thresh.cpp",
+        "//third_party/opencv/modules/imgproc/test/test_watershed.cpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/highgui/include",
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

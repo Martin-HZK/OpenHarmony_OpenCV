@@ -1,0 +1,92 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv stitching build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_stitching_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+}
+
+action("ocv_cl2cpp_stitching") {
+    script = "//third_party/opencv/build_cpp_from_cl.py"
+    outputs = [
+        "$target_out_dir/opencl_kernels_stitching.cpp",
+        "$target_out_dir/opencl_kernels_stitching.hpp",
+    ]
+    cl_path = rebase_path("//third_party/opencv/modules/stitching/src/opencl")
+    save_path = rebase_path("$target_out_dir")
+    module_name = "stitching"
+    args = [
+        "--cl_path=$cl_path",
+        "--save_path=$save_path",
+        "--module_name=$module_name",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}
+
+ohos_source_set("opencv_stitching_source") {
+    sources = [
+        "//third_party/opencv/modules/stitching/src/autocalib.cpp",
+        "//third_party/opencv/modules/stitching/src/blenders.cpp",
+        "//third_party/opencv/modules/stitching/src/camera.cpp",
+        "//third_party/opencv/modules/stitching/src/exposure_compensate.cpp",
+        "//third_party/opencv/modules/stitching/src/matchers.cpp",
+        "//third_party/opencv/modules/stitching/src/motion_estimators.cpp",
+        "//third_party/opencv/modules/stitching/src/seam_finders.cpp",
+        "//third_party/opencv/modules/stitching/src/stitcher.cpp",
+        "//third_party/opencv/modules/stitching/src/timelapsers.cpp",
+        "//third_party/opencv/modules/stitching/src/util.cpp",
+        "//third_party/opencv/modules/stitching/src/warpers.cpp",
+        "//third_party/opencv/modules/stitching/src/warpers_cuda.cpp",
+        #"//third_party/opencv/build/modules/stitching/opencl_kernels_stitching.cpp",
+        #"//third_party/opencv/build/modules/stitching/opencl_kernels_stitching.hpp",
+        "//third_party/opencv/modules/stitching/src/precomp.hpp",
+        "//third_party/opencv/modules/stitching/src/util_log.hpp"
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/stitching/include",
+        "//third_party/opencv/build/modules/stitching",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "$target_out_dir",
+    ]
+    deps = [  
+        ":ocv_cl2cpp_stitching",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d"
+    ]
+    configs = [ ":opencv_stitching_config" ]
+
+    sources += get_target_outputs(":ocv_cl2cpp_stitching")
+}
+
+ohos_shared_library("libopencv_stitching") {
+    deps = [ ":opencv_stitching_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+

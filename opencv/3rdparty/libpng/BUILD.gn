@@ -1,0 +1,84 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv libpng build
+
+import("//build/ohos.gni")
+
+config("libpng_config") {
+    cflags_cc = [
+        "-Wextra",
+        "-Wno-unused-function",
+        "-Wno-unused-variable",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-sometimes-uninitialized",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-Wno-incompatible-pointer-types",
+        "-Werror",
+        "-Wimplicit-function-declaration",
+        "-fno-tree-vectorize",
+        "-fno-unwind-tables",
+        "-fwrapv",  
+        "-fPIC",
+        "-Wno-unused-parameter",
+        "-Wno-sign-compare",
+        "-Wno-shorten-64-to-32",
+        "-Wno-implicit-fallthrough",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+    ]
+    defines = [
+        "__ARM_NEON__",
+    ]
+}
+
+ohos_source_set("opencv_libpng_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/libpng/png.c",
+        "//third_party/opencv/3rdparty/libpng/pngerror.c",
+        "//third_party/opencv/3rdparty/libpng/pngget.c",
+        "//third_party/opencv/3rdparty/libpng/pngmem.c",
+        "//third_party/opencv/3rdparty/libpng/pngpread.c",
+        "//third_party/opencv/3rdparty/libpng/pngread.c",
+        "//third_party/opencv/3rdparty/libpng/pngrio.c",
+        "//third_party/opencv/3rdparty/libpng/pngrtran.c",
+        "//third_party/opencv/3rdparty/libpng/pngrutil.c",
+        "//third_party/opencv/3rdparty/libpng/pngset.c",
+        "//third_party/opencv/3rdparty/libpng/pngtrans.c",
+        "//third_party/opencv/3rdparty/libpng/pngwio.c",
+        "//third_party/opencv/3rdparty/libpng/pngwrite.c",
+        "//third_party/opencv/3rdparty/libpng/pngwtran.c",
+        "//third_party/opencv/3rdparty/libpng/pngwutil.c",
+        "//third_party/opencv/3rdparty/libpng/arm/arm_init.c",
+        "//third_party/opencv/3rdparty/libpng/arm/filter_neon_intrinsics.c",
+        "//third_party/opencv/3rdparty/libpng/arm/palette_neon_intrinsics.c"
+    ]
+    include_dirs = [ 
+        "//third_party/opencv/3rdparty/libpng",
+        "//third_party/opencv/3rdparty/zlib"
+    ]
+    deps = [  
+        "//third_party/opencv/3rdparty/zlib:libopencv_zlib"
+    ]
+    configs = [ ":libpng_config" ]
+}
+
+ohos_static_library("libopencv_png") {
+    deps = [ ":opencv_libpng_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

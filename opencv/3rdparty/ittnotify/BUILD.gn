@@ -1,0 +1,51 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv ittnotify build
+
+import("//build/ohos.gni")
+
+config("ittnotify_config") {
+    cflags = [
+        "-Wno-sign-compare",
+        "-pthread",
+        "-fPIC",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+    ]
+    defines = ["__ARM_NEON__",]
+}
+
+ohos_source_set("opencv_ittnotify_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/disable_warnings.h",
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/ittnotify_config.h",
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/ittnotify_static.c",
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/ittnotify_static.h",
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/ittnotify_types.h",
+        "//third_party/opencv/3rdparty/ittnotify/src/ittnotify/jitprofiling.c"
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/ittnotify/include",
+        "//third_party/opencv/3rdparty/ittnotify/src"
+    ]
+    deps = []
+
+    configs = [ ":ittnotify_config" ]
+}
+
+ohos_static_library("libopencv_ittnotify") {
+    deps = [ ":opencv_ittnotify_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

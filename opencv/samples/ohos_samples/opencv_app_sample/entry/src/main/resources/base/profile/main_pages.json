@@ -1,0 +1,10 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/image/basicSample/image2Gray",
+    "pages/image/basicSample/qrcode",
+    "pages/image/basicSample/qrcode_result_web",
+    "pages/image/basicSample/faceDetect",
+    "pages/image/basicSample/edgeDetection"
+  ]
+}

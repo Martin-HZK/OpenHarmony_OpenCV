@@ -1,0 +1,401 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv core build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_core_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+    defines += [    
+        "HAVE_MALLOC_H=1",
+        "HAVE_MEMALIGN=1",
+        "HAVE_POSIX_MEMALIGN=1",
+        "PARALLEL_ENABLE_PLUGINS=1",
+    ]
+}
+action("ocv_cl2cpp_core") {
+    script = "//third_party/opencv/build_cpp_from_cl.py"
+    outputs = [
+        "$target_out_dir/opencl_kernels_core.cpp",
+        "$target_out_dir/opencl_kernels_core.hpp",
+    ]
+
+    cl_path = rebase_path("//third_party/opencv/modules/core/src/opencl")
+    save_path = rebase_path("$target_out_dir")
+    module_name = "core"
+    args = [
+        "--cl_path=$cl_path",
+        "--save_path=$save_path",
+        "--module_name=$module_name",
+        "--target_cpu=$target_cpu",
+    ]
+}
+
+ohos_source_set("opencv_core_source") {
+    sources = [
+        "//third_party/opencv/build/modules/core/version_string.inc",
+        "//third_party/opencv/modules/core/src/algorithm.cpp",
+        "//third_party/opencv/modules/core/src/alloc.cpp",
+        "//third_party/opencv/modules/core/src/arithm.cpp",
+        "//third_party/opencv/modules/core/src/arithm.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/array.cpp",
+        "//third_party/opencv/modules/core/src/async.cpp",
+        "//third_party/opencv/modules/core/src/batch_distance.cpp",
+        "//third_party/opencv/modules/core/src/bindings_utils.cpp",
+        "//third_party/opencv/modules/core/src/buffer_area.cpp",
+        "//third_party/opencv/modules/core/src/channels.cpp",
+        "//third_party/opencv/modules/core/src/check.cpp",
+        "//third_party/opencv/modules/core/src/command_line_parser.cpp",
+        "//third_party/opencv/modules/core/src/conjugate_gradient.cpp",
+        "//third_party/opencv/modules/core/src/convert.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/convert_c.cpp",
+        "//third_party/opencv/modules/core/src/convert_scale.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/copy.cpp",
+        "//third_party/opencv/modules/core/src/count_non_zero.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/cuda_gpu_mat.cpp",
+        "//third_party/opencv/modules/core/src/cuda_gpu_mat_nd.cpp",
+        "//third_party/opencv/modules/core/src/cuda_host_mem.cpp",
+        "//third_party/opencv/modules/core/src/cuda_info.cpp",
+        "//third_party/opencv/modules/core/src/cuda_stream.cpp",
+        "//third_party/opencv/modules/core/src/datastructs.cpp",
+        "//third_party/opencv/modules/core/src/directx.cpp",
+        "//third_party/opencv/modules/core/src/downhill_simplex.cpp",
+        "//third_party/opencv/modules/core/src/dxt.cpp",
+        "//third_party/opencv/modules/core/src/gl_core_3_1.cpp",
+        "//third_party/opencv/modules/core/src/glob.cpp",
+        "//third_party/opencv/modules/core/src/hal_internal.cpp",
+        "//third_party/opencv/modules/core/src/kmeans.cpp",
+        "//third_party/opencv/modules/core/src/lapack.cpp",
+        "//third_party/opencv/modules/core/src/lda.cpp",
+        "//third_party/opencv/modules/core/src/logger.cpp",
+        "//third_party/opencv/modules/core/src/lpsolver.cpp",
+        "//third_party/opencv/modules/core/src/lut.cpp",
+        "//third_party/opencv/modules/core/src/mathfuncs.cpp",
+        "//third_party/opencv/modules/core/src/mathfuncs_core.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/matmul.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/matrix.cpp",
+        "//third_party/opencv/modules/core/src/matrix_c.cpp",
+        "//third_party/opencv/modules/core/src/matrix_decomp.cpp",
+        "//third_party/opencv/modules/core/src/matrix_expressions.cpp",
+        "//third_party/opencv/modules/core/src/matrix_iterator.cpp",
+        "//third_party/opencv/modules/core/src/matrix_operations.cpp",
+        "//third_party/opencv/modules/core/src/matrix_sparse.cpp",
+        "//third_party/opencv/modules/core/src/matrix_transform.cpp",
+        "//third_party/opencv/modules/core/src/matrix_wrap.cpp",
+        "//third_party/opencv/modules/core/src/mean.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/merge.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/minmax.cpp",
+        "//third_party/opencv/modules/core/src/norm.cpp",
+        "//third_party/opencv/modules/core/src/ocl.cpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/opencl_clblas.cpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/opencl_clfft.cpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/opencl_core.cpp",
+        "//third_party/opencv/modules/core/src/opengl.cpp",
+        "//third_party/opencv/modules/core/src/out.cpp",
+        "//third_party/opencv/modules/core/src/ovx.cpp",
+        "//third_party/opencv/modules/core/src/parallel.cpp",
+        "//third_party/opencv/modules/core/src/parallel/parallel.cpp",
+        "//third_party/opencv/modules/core/src/parallel/parallel_openmp.cpp",
+        "//third_party/opencv/modules/core/src/parallel/parallel_tbb.cpp",
+        "//third_party/opencv/modules/core/src/parallel_impl.cpp",
+        "//third_party/opencv/modules/core/src/pca.cpp",
+        "//third_party/opencv/modules/core/src/persistence.cpp",
+        "//third_party/opencv/modules/core/src/persistence_base64_encoding.cpp",
+        "//third_party/opencv/modules/core/src/persistence_json.cpp",
+        "//third_party/opencv/modules/core/src/persistence_types.cpp",
+        "//third_party/opencv/modules/core/src/persistence_xml.cpp",
+        "//third_party/opencv/modules/core/src/persistence_yml.cpp",
+        "//third_party/opencv/modules/core/src/rand.cpp",
+        "//third_party/opencv/modules/core/src/softfloat.cpp",
+        "//third_party/opencv/modules/core/src/split.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/stat.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/stat_c.cpp",
+        "//third_party/opencv/modules/core/src/stl.cpp",
+        "//third_party/opencv/modules/core/src/sum.dispatch.cpp",
+        "//third_party/opencv/modules/core/src/system.cpp",
+        "//third_party/opencv/modules/core/src/tables.cpp",
+        "//third_party/opencv/modules/core/src/trace.cpp",
+        "//third_party/opencv/modules/core/src/types.cpp",
+        "//third_party/opencv/modules/core/src/umatrix.cpp",
+        "//third_party/opencv/modules/core/src/utils/datafile.cpp",
+        "//third_party/opencv/modules/core/src/utils/filesystem.cpp",
+        "//third_party/opencv/modules/core/src/utils/logtagconfigparser.cpp",
+        "//third_party/opencv/modules/core/src/utils/logtagmanager.cpp",
+        "//third_party/opencv/modules/core/src/utils/samples.cpp",
+        "//third_party/opencv/modules/core/src/va_intel.cpp",
+        "//third_party/opencv/modules/core/src/arithm.simd.hpp",
+        "//third_party/opencv/modules/core/src/arithm_ipp.hpp",
+        "//third_party/opencv/modules/core/src/bufferpool.impl.hpp",
+        "//third_party/opencv/modules/core/src/convert.hpp",
+        "//third_party/opencv/modules/core/src/convert.simd.hpp",
+        "//third_party/opencv/modules/core/src/convert_scale.simd.hpp",
+        "//third_party/opencv/modules/core/src/count_non_zero.simd.hpp",
+        "//third_party/opencv/modules/core/src/directx.inc.hpp",
+        "//third_party/opencv/modules/core/src/gl_core_3_1.hpp",
+        "//third_party/opencv/modules/core/src/hal_internal.hpp",
+        "//third_party/opencv/modules/core/src/hal_replacement.hpp",
+        "//third_party/opencv/modules/core/src/intel_gpu_gemm.inl.hpp",
+        "//third_party/opencv/modules/core/src/mathfuncs.hpp",
+        "//third_party/opencv/modules/core/src/mathfuncs_core.simd.hpp",
+        "//third_party/opencv/modules/core/src/matmul.simd.hpp",
+        "//third_party/opencv/modules/core/src/mean.simd.hpp",
+        "//third_party/opencv/modules/core/src/merge.simd.hpp",
+        "//third_party/opencv/modules/core/src/ocl_disabled.impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_clblas_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_clfft_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_core_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_core_static_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_gl_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/autogenerated/opencl_gl_static_impl.hpp",
+        "//third_party/opencv/modules/core/src/opencl/runtime/runtime_common.hpp",
+        "//third_party/opencv/modules/core/src/parallel/factory_parallel.hpp",
+        "//third_party/opencv/modules/core/src/parallel/parallel.hpp",
+        "//third_party/opencv/modules/core/src/parallel/plugin_parallel_api.hpp",
+        "//third_party/opencv/modules/core/src/parallel/plugin_parallel_wrapper.impl.hpp",
+        "//third_party/opencv/modules/core/src/parallel/registry_parallel.hpp",
+        "//third_party/opencv/modules/core/src/parallel/registry_parallel.impl.hpp",
+        "//third_party/opencv/modules/core/src/parallel_impl.hpp",
+        "//third_party/opencv/modules/core/src/persistence.hpp",
+        "//third_party/opencv/modules/core/src/persistence_base64_encoding.hpp",
+        "//third_party/opencv/modules/core/src/persistence_impl.hpp",
+        "//third_party/opencv/modules/core/src/precomp.hpp",
+        "//third_party/opencv/modules/core/src/split.simd.hpp",
+        "//third_party/opencv/modules/core/src/stat.hpp",
+        "//third_party/opencv/modules/core/src/stat.simd.hpp",
+        "//third_party/opencv/modules/core/src/sum.simd.hpp",
+        "//third_party/opencv/modules/core/src/umatrix.hpp",
+        "//third_party/opencv/modules/core/src/utils/logtagconfig.hpp",
+        "//third_party/opencv/modules/core/src/utils/logtagconfigparser.hpp",
+        "//third_party/opencv/modules/core/src/utils/logtagmanager.hpp",
+        "//third_party/opencv/modules/core/src/utils/plugin_loader.impl.hpp",
+        "//third_party/opencv/modules/core/src/va_wrapper.impl.hpp"
+    ]
+
+    sources += get_target_outputs(":ocv_cl2cpp_core")
+    include_dirs = [
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/build/modules/core",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/3rdparty/include/opencl/1.2",
+        "//third_party/opencv/3rdparty/zlib",
+        "//third_party/opencv/3rdparty/ittnotify/include",
+        "$target_out_dir",
+    ]
+    deps = [  
+        ":ocv_cl2cpp_core",
+        #":ocv_build_dispatch_mathfuncs_core",
+        "//third_party/opencv/3rdparty/zlib:libopencv_zlib",
+        "//third_party/opencv/3rdparty/ittnotify:libopencv_ittnotify",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+
+    configs = [ ":opencv_core_config" ]
+}
+
+ohos_shared_library("libopencv_core") {
+    deps = [ ":opencv_core_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
+action("ocv_build_dispatch_mathfuncs_core") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/mathfuncs_core_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "mathfuncs_core"
+    optimizations = "SSE2 AVX AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_stat"]
+}
+
+action("ocv_build_dispatch_stat") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/stat_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "stat"
+    optimizations = "SSE4_2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_arithm"]
+}
+
+action("ocv_build_dispatch_arithm") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/arithm_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "arithm"
+    optimizations = "SSE2 SSE4_1 AVX2 VSX3"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_convert"]
+}
+
+action("ocv_build_dispatch_convert") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/convert_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "convert"
+    optimizations = "SSE2 AVX2 VSX3"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_convert_scale"]
+}
+
+action("ocv_build_dispatch_convert_scale") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/convert_scale_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "convert_scale"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_count_non_zero"]
+}
+
+action("ocv_build_dispatch_count_non_zero") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/count_non_zero_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "count_non_zero"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_matmul"]
+}
+
+action("ocv_build_dispatch_matmul") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/matmul_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "matmul"
+    optimizations = "SSE2 SSE4_1 AVX2 AVX512_SKX"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_mean"]
+}
+
+action("ocv_build_dispatch_mean") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/mean_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "mean"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_merge"]
+}
+
+action("ocv_build_dispatch_merge") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/merge_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "merge"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_split"]
+}
+
+action("ocv_build_dispatch_split") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/split_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "split"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = [":ocv_build_dispatch_sum"]
+}
+
+action("ocv_build_dispatch_sum") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/sum_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/core")
+    file_name = "sum"
+    optimizations = "SSE2 AVX2"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/3rdparty/carotene:libtegra_hal",]
+}
+

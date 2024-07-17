@@ -1,0 +1,116 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# avutil build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/3rdparty/ffmpeg/ffmpeg_build_common.gni")
+
+config("ffmpeg_avutil") {
+    cflags = ffmpeg_common_cflags
+}
+
+ohos_source_set("opencv_ffmpeg_avutil") {
+    sources = [
+        "./hwcontext.c",
+        "./tea.c",
+        "./spherical.c",
+        "./intmath.c",
+        "./threadmessage.c",
+        "./video_enc_params.c",
+        "./file.c",
+        "./tx_int32.c",
+        "./dict.c",
+        "./tree.c",
+        "./downmix_info.c",
+        "./adler32.c",
+        "./opt.c",
+        "./blowfish.c",
+        "./sha.c",
+        "./tx_float.c",
+        "./md5.c",
+        "./crc.c",
+        "./tx_double.c",
+        "./eval.c",
+        "./mathematics.c",
+        "./hdr_dynamic_metadata.c",
+        "./rational.c",
+        "./cpu.c",
+        "./display.c",
+        "./hmac.c",
+        "./reverse.c",
+        "./murmur3.c",
+        "./channel_layout.c",
+        "./rc4.c",
+        "./frame.c",
+        "./log.c",
+        "./buffer.c",
+        "./sha512.c",
+        "./twofish.c",
+        "./mastering_display_metadata.c",
+        "./float_dsp.c",
+        "./random_seed.c",
+        "./pixelutils.c",
+        "./ripemd.c",
+        "./xga_font_data.c",
+        "./lzo.c",
+        "./tx.c",
+        "./pixdesc.c",
+        "./des.c",
+        "./fifo.c",
+        "./stereo3d.c",
+        "./lfg.c",
+        "./avstring.c",
+        "./mem.c",
+        "./encryption_info.c",
+        "./samplefmt.c",
+        "./color_utils.c",
+        "./integer.c",
+        "./cast5.c",
+        "./bprint.c",
+        "./fixed_dsp.c",
+        "./timecode.c",
+        "./xtea.c",
+        "./lls.c",
+        "./camellia.c",
+        "./base64.c",
+        "./file_open.c",
+        "./aes_ctr.c",
+        "./error.c",
+        "./dovi_meta.c",
+        "./utils.c",
+        "./hash.c",
+        "./aes.c",
+        "./log2_tab.c",
+        "./imgutils.c",
+        "./avsscanf.c",
+        "./time.c",
+        "./audio_fifo.c",
+        "./parseutils.c",
+        "./slicethread.c",
+
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/ffmpeg/",
+        "//third_party/opencv/3rdparty/ffmpeg/include",
+    ]
+    deps = []
+    configs = [":ffmpeg_avutil"]
+}
+
+ohos_shared_library("libopencv_avutil") {
+    deps = [ ":opencv_ffmpeg_avutil" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+

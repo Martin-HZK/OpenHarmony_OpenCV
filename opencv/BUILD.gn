@@ -1,0 +1,91 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv build
+
+import("//build/ohos.gni")
+
+group("opencv") {
+    deps = [
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/photo:libopencv_photo",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+        "//third_party/opencv/modules/video:libopencv_video",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/ml:libopencv_ml",
+        "//third_party/opencv/modules/stitching:libopencv_stitching",
+        "//third_party/opencv/modules/dnn:libopencv_dnn",
+        "//third_party/opencv/modules/objdetect:libopencv_objdetect",
+        "//third_party/opencv/modules/gapi:libopencv_gapi",
+        # NAPI interface lib
+        "//third_party/opencv/napi:opencv_napi",
+        # test depends
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        ":opencv_test",
+    ]
+}
+
+group("opencv_image") {
+    deps = [
+        "//third_party/opencv/modules/photo:libopencv_photo",
+        "//third_party/opencv/modules/gapi:libopencv_gapi",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+    ]
+}
+
+group("opencv_objdetect") {
+    deps = [
+        "//third_party/opencv/modules/objdetect:libopencv_objdetect",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+    ]
+}
+
+group("opencv_video") {
+    deps = [
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/video:libopencv_video",
+    ]
+}
+
+group("opencv_AI") {
+    deps = [
+        "//third_party/opencv/modules/ml:libopencv_ml",
+        "//third_party/opencv/modules/dnn:libopencv_dnn",
+    ]
+}
+
+group("opencv_test") {
+    deps = [
+        "//third_party/opencv/modules/calib3d/test:opencv_test_calib3d",
+        "//third_party/opencv/modules/core/test:opencv_test_core",
+        "//third_party/opencv/modules/dnn/test:opencv_test_dnn",
+        "//third_party/opencv/modules/features2d/test:opencv_test_features2d",
+        "//third_party/opencv/modules/flann/test:opencv_test_flann",
+        "//third_party/opencv/modules/gapi/test:opencv_test_gapi",
+        "//third_party/opencv/modules/imgcodecs/test:opencv_test_imgcodecs",
+        "//third_party/opencv/modules/imgproc/test:opencv_test_imgproc",
+        "//third_party/opencv/modules/ml/test:opencv_test_ml",
+        "//third_party/opencv/modules/objdetect/test:opencv_test_objdetect",
+        "//third_party/opencv/modules/photo/test:opencv_test_photo",
+        "//third_party/opencv/modules/stitching/test:opencv_test_stitching",
+        "//third_party/opencv/modules/video/test:opencv_test_video",
+        "//third_party/opencv/modules/videoio/test:opencv_test_videoio",
+    ]
+}
+

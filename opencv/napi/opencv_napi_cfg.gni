@@ -1,0 +1,82 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/version.gni")
+import("//build/ohos_var.gni")
+
+declare_args() {
+    opencv_napi_with_core = true
+    opencv_napi_with_imgproc = true
+    opencv_napi_with_imgcodecs = true
+    opencv_napi_with_objdetect = true
+}
+
+declare_args() {
+    opencv_debug_enable = true
+}
+
+napi_sources_core = [
+    "//third_party/opencv/napi/js/napi/src/core/n_copyMakeBorder.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_vconcat.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_hconcat.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_flip.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_bitwise_and.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_bitwise_or.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_bitwise_xor.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_bitwise_not.cpp",
+    "//third_party/opencv/napi/js/napi/src/core/n_convertScaleAbs.cpp",
+]
+
+napi_sources_imgproc = [
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_cvtColor.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_edgeDetect.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_resize.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_warpAffine.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_mat2pixel.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_rectangle.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_equalizeHist.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_threshold.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_adaptiveThreshold.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_warpPolar.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_circle.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_line.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_ellipse.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_putText.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_pyrDown.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_pyrUp.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_fillPoly.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_filter2D.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_blur.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_boxFilter.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_sqrBoxFilter.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_GaussianBlur.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_medianBlur.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_bilateralFilter.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_Sobel.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_Canny.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_Laplacian.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_Scharr.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_findContours.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgproc/n_HoughLines.cpp",
+    
+]
+
+napi_sources_imgcodecs = [
+    "//third_party/opencv/napi/js/napi/src/imgcodecs/n_imRead.cpp",
+    "//third_party/opencv/napi/js/napi/src/imgcodecs/n_imWrite.cpp",
+]
+
+napi_sources_objdetect = [
+    "//third_party/opencv/napi/js/napi/src/objdetect/n_qrcode.cpp",
+    "//third_party/opencv/napi/js/napi/src/objdetect/n_detectMultiScale.cpp",
+]

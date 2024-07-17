@@ -1,0 +1,152 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv core test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_core_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+    defines += [ "CV_CPU_DISPATCH_MODE=FP16", ]
+}
+
+
+action("ocv_build_dispatch_test_intrin128_core") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$target_out_dir/test_intrin128.fp16.cpp"]
+    src_path = rebase_path("//third_party/opencv/modules/core/test")
+    save_path = rebase_path("$target_out_dir")
+    file_name = "test_intrin128"
+    optimizations = "SSE2 SSE3 SSSE3 SSE4_1 SSE4_2 AVX FP16 AVX2 AVX512_SKX"
+    precomp_name = "test_precomp.hpp"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+        "--precomp=$precomp_name",
+    ]
+    deps = [":ocv_build_dispatch_test_intrin256_core"]
+}
+
+action("ocv_build_dispatch_test_intrin256_core") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/test_intrin256_core_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/test")
+    save_path = rebase_path("//third_party/opencv/build/modules/core/test")
+    file_name = "test_intrin256"
+    optimizations = "AVX2 AVX512_SKX"
+    precomp_name = "test_precomp.hpp"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+        "--precomp=$precomp_name",
+    ]
+    deps = [":ocv_build_dispatch_test_intrin512_core"]
+}
+
+action("ocv_build_dispatch_test_intrin512_core") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/test_intrin512_core_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/core/test")
+    save_path = rebase_path("//third_party/opencv/build/modules/core/test")
+    file_name = "test_intrin512"
+    optimizations = "AVX512_SKX"
+    precomp_name = "test_precomp.hpp"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+        "--precomp=$precomp_name",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core"]
+}
+
+ohos_executable("opencv_test_core") {
+    configs = [":opencv_core_test_config"]
+    sources = [
+        "//third_party/opencv/modules/core/test/ocl/test_arithm.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_channels.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_dft.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_gemm.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_image2d.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_matrix_expr.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_matrix_operation.cpp",
+        "//third_party/opencv/modules/core/test/ocl/test_opencl.cpp",
+        "//third_party/opencv/modules/core/test/test_arithm.cpp",
+        "//third_party/opencv/modules/core/test/test_async.cpp",
+        "//third_party/opencv/modules/core/test/test_concatenation.cpp",
+        "//third_party/opencv/modules/core/test/test_conjugate_gradient.cpp",
+        "//third_party/opencv/modules/core/test/test_countnonzero.cpp",
+        "//third_party/opencv/modules/core/test/test_cuda.cpp",
+        "//third_party/opencv/modules/core/test/test_downhill_simplex.cpp",
+        "//third_party/opencv/modules/core/test/test_ds.cpp",
+        "//third_party/opencv/modules/core/test/test_dxt.cpp",
+        "//third_party/opencv/modules/core/test/test_eigen.cpp",
+        "//third_party/opencv/modules/core/test/test_hal_core.cpp",
+        "//third_party/opencv/modules/core/test/test_io.cpp",
+        "//third_party/opencv/modules/core/test/test_logtagconfigparser.cpp",
+        "//third_party/opencv/modules/core/test/test_logtagmanager.cpp",
+        "//third_party/opencv/modules/core/test/test_lpsolver.cpp",
+        "//third_party/opencv/modules/core/test/test_main.cpp",
+        "//third_party/opencv/modules/core/test/test_mat.cpp",
+        "//third_party/opencv/modules/core/test/test_math.cpp",
+        "//third_party/opencv/modules/core/test/test_misc.cpp",
+        "//third_party/opencv/modules/core/test/test_opencl.cpp",
+        "//third_party/opencv/modules/core/test/test_operations.cpp",
+        "//third_party/opencv/modules/core/test/test_ptr.cpp",
+        "//third_party/opencv/modules/core/test/test_quaternion.cpp",
+        "//third_party/opencv/modules/core/test/test_rand.cpp",
+        "//third_party/opencv/modules/core/test/test_rotatedrect.cpp",
+        "//third_party/opencv/modules/core/test/test_umat.cpp",
+        "//third_party/opencv/modules/core/test/test_utils.cpp",
+        
+        #"//third_party/opencv/modules/core/test/test_intrin.cpp",
+        #"//third_party/opencv/modules/core/test/test_intrin_emulator.cpp",     
+    ]
+    #sources += get_target_outputs(":ocv_build_dispatch_test_intrin128_core")
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/core/test",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/highgui/include",
+        "//third_party/opencv/build/modules/core/test",
+        "$target_out_dir",
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+        #":ocv_build_dispatch_test_intrin128_core",
+    ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+

@@ -1,0 +1,62 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv photo test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_photo_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+}
+
+ohos_executable("opencv_test_photo") {
+    configs = [":opencv_photo_test_config"]
+    sources = [
+        "//third_party/opencv/modules/photo/test/ocl/test_denoising.cpp",
+        "//third_party/opencv/modules/photo/test/test_cloning.cpp",
+        "//third_party/opencv/modules/photo/test/test_decolor.cpp",
+        "//third_party/opencv/modules/photo/test/test_denoise_tvl1.cpp",
+        "//third_party/opencv/modules/photo/test/test_denoising.cpp",
+        "//third_party/opencv/modules/photo/test/test_denoising.cuda.cpp",
+        "//third_party/opencv/modules/photo/test/test_hdr.cpp",
+        "//third_party/opencv/modules/photo/test/test_inpaint.cpp",
+        "//third_party/opencv/modules/photo/test/test_main.cpp",
+        "//third_party/opencv/modules/photo/test/test_npr.cpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/highgui/include",
+        "//third_party/opencv/modules/photo/include",
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/photo:libopencv_photo",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

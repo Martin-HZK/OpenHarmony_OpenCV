@@ -1,0 +1,131 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv features2d build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_features2d_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+}
+
+action("ocv_cl2cpp_features2d") {
+    script = "//third_party/opencv/build_cpp_from_cl.py"
+    outputs = [
+        "$target_out_dir/opencl_kernels_features2d.cpp",
+        "$target_out_dir/opencl_kernels_features2d.hpp",
+    ]
+    cl_path = rebase_path("//third_party/opencv/modules/features2d/src/opencl")
+    save_path = rebase_path("$target_out_dir")
+    module_name = "features2d"
+    args = [
+        "--cl_path=$cl_path",
+        "--save_path=$save_path",
+        "--module_name=$module_name",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}
+
+ohos_source_set("opencv_features2d_source") {
+    sources = [
+        "//third_party/opencv/modules/features2d/src/affine_feature.cpp",
+        "//third_party/opencv/modules/features2d/src/agast.cpp",
+        "//third_party/opencv/modules/features2d/src/agast_score.cpp",
+        "//third_party/opencv/modules/features2d/src/akaze.cpp",
+        "//third_party/opencv/modules/features2d/src/bagofwords.cpp",
+        "//third_party/opencv/modules/features2d/src/blobdetector.cpp",
+        "//third_party/opencv/modules/features2d/src/brisk.cpp",
+        "//third_party/opencv/modules/features2d/src/draw.cpp",
+        "//third_party/opencv/modules/features2d/src/dynamic.cpp",
+        "//third_party/opencv/modules/features2d/src/evaluation.cpp",
+        "//third_party/opencv/modules/features2d/src/fast.cpp",
+        "//third_party/opencv/modules/features2d/src/fast_score.cpp",
+        "//third_party/opencv/modules/features2d/src/feature2d.cpp",
+        "//third_party/opencv/modules/features2d/src/gftt.cpp",
+        "//third_party/opencv/modules/features2d/src/kaze.cpp",
+        "//third_party/opencv/modules/features2d/src/kaze/AKAZEFeatures.cpp",
+        "//third_party/opencv/modules/features2d/src/kaze/KAZEFeatures.cpp",
+        "//third_party/opencv/modules/features2d/src/kaze/fed.cpp",
+        "//third_party/opencv/modules/features2d/src/kaze/nldiffusion_functions.cpp",
+        "//third_party/opencv/modules/features2d/src/keypoint.cpp",
+        "//third_party/opencv/modules/features2d/src/main.cpp",
+        "//third_party/opencv/modules/features2d/src/matchers.cpp",
+        "//third_party/opencv/modules/features2d/src/mser.cpp",
+        "//third_party/opencv/modules/features2d/src/orb.cpp",
+        "//third_party/opencv/modules/features2d/src/sift.dispatch.cpp",
+        #"//third_party/opencv/build/modules/features2d/opencl_kernels_features2d.cpp",
+        #"//third_party/opencv/build/modules/features2d/opencl_kernels_features2d.hpp",
+        "//third_party/opencv/modules/features2d/src/agast_score.hpp",
+        "//third_party/opencv/modules/features2d/src/fast.hpp",
+        "//third_party/opencv/modules/features2d/src/fast_score.hpp",
+        "//third_party/opencv/modules/features2d/src/hal_replacement.hpp",
+        "//third_party/opencv/modules/features2d/src/kaze/AKAZEConfig.h",
+        "//third_party/opencv/modules/features2d/src/kaze/AKAZEFeatures.h",
+        "//third_party/opencv/modules/features2d/src/kaze/KAZEConfig.h",
+        "//third_party/opencv/modules/features2d/src/kaze/KAZEFeatures.h",
+        "//third_party/opencv/modules/features2d/src/kaze/TEvolution.h",
+        "//third_party/opencv/modules/features2d/src/kaze/fed.h",
+        "//third_party/opencv/modules/features2d/src/kaze/nldiffusion_functions.h",
+        "//third_party/opencv/modules/features2d/src/kaze/utils.h",
+        "//third_party/opencv/modules/features2d/src/precomp.hpp",
+        "//third_party/opencv/modules/features2d/src/sift.simd.hpp"
+    ]
+    include_dirs = [
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/build/modules/features2d",
+        "$target_out_dir",
+    ]
+
+    deps = [  
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+        #":ocv_build_dispatch_sift",
+        ":ocv_cl2cpp_features2d",
+    ]
+    configs = [ ":opencv_features2d_config" ]
+
+    sources += get_target_outputs(":ocv_cl2cpp_features2d")
+}
+
+ohos_shared_library("libopencv_features2d") {
+    deps = [ ":opencv_features2d_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
+action("ocv_build_dispatch_sift") {
+    script = "//third_party/opencv/build_dispatched_file.py"
+    outputs = ["$root_out_dir/sift_log.txt"]
+    src_path = rebase_path("//third_party/opencv/modules/features2d/src")
+    save_path = rebase_path("//third_party/opencv/build/modules/features2d")
+    file_name = "sift"
+    optimizations = "SSE4_1 AVX2 AVX512_SKX"
+    args = [
+        "--src_path=$src_path",
+        "--save_path=$save_path",
+        "--file_name=$file_name",
+        "--optimizations=$optimizations",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}

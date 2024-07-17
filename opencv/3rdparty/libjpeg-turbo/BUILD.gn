@@ -1,0 +1,118 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv libjpeg-turbo build
+
+import("//build/ohos.gni")
+
+config("libjpeg-turbo_config") {
+    cflags_cc = [
+        "-Wextra",
+        "-Wno-unused-function",
+        "-Wno-unused-variable",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-sometimes-uninitialized",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-Wno-incompatible-pointer-types",
+        "-Werror",
+        "-Wimplicit-function-declaration",
+        "-fno-tree-vectorize",
+        "-fno-unwind-tables",
+        "-fwrapv",  
+        "-fPIC",
+        "-Wno-unused-parameter",
+        "-Wno-sign-compare",
+        "-Wno-shorten-64-to-32",
+        "-Wno-implicit-fallthrough",
+        "-pthread",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+    ]
+    defines = ["__ARM_NEON__",]
+}
+
+ohos_source_set("opencv_libjpeg-turbo_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcapimin.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcapistd.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jccoefct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jccolor.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcdctmgr.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jchuff.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcicc.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcinit.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcmainct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcmarker.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcmaster.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcomapi.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcparam.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcphuff.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcprepct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcsample.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jctrans.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdapimin.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdapistd.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdatadst.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdatasrc.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdcoefct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdcolor.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jddctmgr.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdhuff.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdicc.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdinput.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdmainct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdmarker.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdmaster.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdmerge.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdphuff.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdpostct.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdsample.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdtrans.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jerror.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jfdctflt.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jfdctfst.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jfdctint.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jidctflt.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jidctfst.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jidctint.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jidctred.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jquant1.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jquant2.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jutils.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jmemmgr.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jmemnobs.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jaricom.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jcarith.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jdarith.c",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src/jsimd_none.c"
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/libjpeg-turbo",
+        "//third_party/opencv/3rdparty/libjpeg-turbo/src",
+        "//third_party/opencv/build/3rdparty/libjpeg-turbo"
+    ]
+    deps = [ 
+        #"//third_party/opencv/modules/core:libopencv_core",
+    ]
+
+    configs = [ ":libjpeg-turbo_config" ]
+}
+
+ohos_static_library("libjpeg-turbo") {
+    deps = [ ":opencv_libjpeg-turbo_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

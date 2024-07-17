@@ -1,0 +1,94 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv objdetect build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_objdetect_config") {
+    cflags_cc = opencv_lib_common_cflags_cc
+    defines = opencv_lib_common_defines
+}
+
+action("ocv_cl2cpp_objdetect") {
+    script = "//third_party/opencv/build_cpp_from_cl.py"
+    outputs = [
+        "$target_out_dir/opencl_kernels_objdetect.cpp",
+        "$target_out_dir/opencl_kernels_objdetect.hpp",
+    ]
+    cl_path = rebase_path("//third_party/opencv/modules/objdetect/src/opencl")
+    save_path = rebase_path("$target_out_dir")
+    module_name = "objdetect"
+    args = [
+        "--cl_path=$cl_path",
+        "--save_path=$save_path",
+        "--module_name=$module_name",
+        "--target_cpu=$target_cpu",
+    ]
+    deps = ["//third_party/opencv/modules/core:libopencv_core",]
+}
+
+ohos_source_set("opencv_objdetect_source") {
+    sources = [
+        "//third_party/opencv/modules/objdetect/src/cascadedetect.cpp",
+        "//third_party/opencv/modules/objdetect/src/cascadedetect_convert.cpp",
+        "//third_party/opencv/modules/objdetect/src/detection_based_tracker.cpp",
+        "//third_party/opencv/modules/objdetect/src/face_detect.cpp",
+        "//third_party/opencv/modules/objdetect/src/face_recognize.cpp",
+        "//third_party/opencv/modules/objdetect/src/hog.cpp",
+        "//third_party/opencv/modules/objdetect/src/main.cpp",
+        "//third_party/opencv/modules/objdetect/src/qrcode.cpp",
+        "//third_party/opencv/modules/objdetect/src/qrcode_encoder.cpp",
+        #"//third_party/opencv/build/modules/objdetect/opencl_kernels_objdetect.cpp",
+        #"//third_party/opencv/build/modules/objdetect/opencl_kernels_objdetect.hpp",
+        "//third_party/opencv/modules/objdetect/src/cascadedetect.hpp",
+        "//third_party/opencv/modules/objdetect/src/precomp.hpp",
+        "//third_party/opencv/modules/objdetect/src/qrcode_encoder_table.inl.hpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/objdetect/include", 
+        "//third_party/opencv/build/modules/objdetect",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/dnn/include", 
+        "//third_party/opencv/modules/features2d/include", 
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/3rdparty/quirc/include",
+        "$target_out_dir",
+    ]
+
+    deps = [
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+        "//third_party/opencv/modules/dnn:libopencv_dnn",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+        "//third_party/opencv/3rdparty/quirc:libopencv_quirc",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        ":ocv_cl2cpp_objdetect",
+    ]
+    configs = [ ":opencv_objdetect_config" ]
+
+    sources += get_target_outputs(":ocv_cl2cpp_objdetect")
+}
+
+ohos_shared_library("libopencv_objdetect") {
+    deps = [ ":opencv_objdetect_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

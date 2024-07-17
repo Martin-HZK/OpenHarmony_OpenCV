@@ -1,0 +1,179 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv 3rtparty protobuf build
+
+import("//build/ohos.gni")
+
+config("opencv_protobuf_config") {
+    cflags_cc = [
+        "-fPIC",
+        "-std=c++11",
+        "-frtti",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+        "-Wno-sign-compare"
+    ]
+    defines = [
+        "HAVE_PTHREAD=1",
+        "__ARM_NEON__",
+    ]
+}
+
+ohos_source_set("opencv_protobuf_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/any.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/any_lite.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/arena.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/arenastring.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor_database.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor.pb.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/dynamic_message.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/extension_set.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/extension_set_heavy.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_reflection.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_util.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/implicit_weak_message.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_field.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/message.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/message_lite.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/parse_context.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/reflection_ops.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/repeated_field.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/repeated_ptr_field.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/text_format.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/unknown_field_set.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/wire_format.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/wire_format_lite.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/port_def.inc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/port_undef.inc",
+
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/coded_stream.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/io_win32.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/strtod.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/tokenizer.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream_impl.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream_impl_lite.cc",
+
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/bytestream.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/common.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/int128.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/status.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/stringpiece.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/stringprintf.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/structurally_valid.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/strutil.cc",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/substitute.cc",
+
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/any.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/arena.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/arena_impl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/arenastring.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor_database.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/descriptor.pb.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/dynamic_message.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/explicitly_constructed.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/extension_set.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/extension_set_inl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/field_access_listener.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/field_mask.pb.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_enum_reflection.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_enum_util.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_bases.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_reflection.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_table_driven.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_tctable_decl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_tctable_impl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/generated_message_util.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/has_bits.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/implicit_weak_message.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/inlined_string_field.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_entry.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_entry_lite.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_field.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_field_inl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_field_lite.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/map_type_handler.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/message.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/message_lite.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/metadata.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/metadata_lite.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/parse_context.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/port.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/reflection.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/reflection_internal.h",
+        "//third_partopencv_protobuf_sourcey/opencv/3rdparty/protobuf/src/google/protobuf/reflection_ops.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/repeated_field.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/repeated_ptr_field.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/text_format.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/unknown_field_set.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/wire_format.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/wire_format_lite.h",
+
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/coded_stream.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/io_win32.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/package_info.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/strtod.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/tokenizer.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream_impl.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/io/zero_copy_stream_impl_lite.h",
+
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/bytestream.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/callback.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/casts.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/common.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/hash.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/int128.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/logging.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/macros.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/map_util.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/mutex.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/once.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/platform_macros.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/port.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/status.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/stl_util.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/stringpiece.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/stringprintf.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/strutil.h",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/stubs/substitute.h",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/3rdparty/protobuf/src",
+        "//third_party/opencv/3rdparty/protobuf/src/google/protobuf/*.inc",
+    ]
+
+    ldflags = [
+        "-ldl",
+        "-lm",
+        "-lpthread",
+        "-lrt",
+    ] 
+
+    configs = [ ":opencv_protobuf_config" ]
+}
+
+ohos_static_library("libopencv_protobuf") {
+    deps = [ ":opencv_protobuf_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+

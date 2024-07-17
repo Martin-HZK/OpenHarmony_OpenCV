@@ -1,0 +1,58 @@
+
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# FFmpeg build
+
+import("//build/ohos.gni")
+declare_args() {
+    ffmpeg_common_cflags = [
+        "-Wno-sign-compare",
+        "-Wno-implicit-function-declaration",
+        "-Wno-parentheses",
+        "-Wno-string-conversion",
+        "-Wno-string-plus-int",
+        "-Wno-asm-operand-widths",
+        "-Wno-pointer-sign",
+        "-Wno-deprecated-declarations",
+        "-Wno-implicit-int",
+        "-Wno-switch",
+        "-Wno-incompatible-pointer-types-discards-qualifiers",
+        "-Wno-int-conversion",
+        "-Wno-absolute-value",
+        "-Wno-unused-function",
+        "-Wno-unused-label",
+        "-Wno-unused-const-variable",
+        #"-Wno-visibility",
+        "-Wno-incompatible-pointer-types",
+        "-Wno-sometimes-uninitialized",
+        "-Wno-format",
+        "-Wno-tautological-constant-out-of-range-compare",
+        "-Wno-macro-redefined",
+        "-Wno-unused-variable",
+        "-Wno-misleading-indentation",
+        "-Wno-implicit-fallthrough",
+        "-Wno-implicit-int-float-conversion",
+        "-Wno-unknown-warning-option",
+        "-DHAVE_AV_CONFIG_H",
+        "-O3",
+        "-Wno-deprecated-pragma",
+        "-Wno-array-parameter",
+    ]
+    if (use_musl) {
+        ffmpeg_common_cflags += [ "-Wno-bool-operation" ]
+    }
+}
+
+
+

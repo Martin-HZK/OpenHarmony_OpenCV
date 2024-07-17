@@ -1,0 +1,91 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv calib3d test build
+
+import("//build/ohos.gni")
+import("//third_party/opencv/opencv_common_cfg.gni")
+
+config("opencv_calib3d_test_config") {
+    cflags_cc = opencv_exe_common_cflags_cc
+    defines = opencv_exe_common_defines
+}
+
+ohos_executable("opencv_test_calib3d") {
+    configs = [":opencv_calib3d_test_config"]
+    sources = [
+        "//third_party/opencv/modules/calib3d/test/opencl/test_stereobm.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_affine2d_estimator.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_affine3.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_affine3d_estimator.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_affine_partial2d_estimator.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_calibration_hand_eye.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_cameracalibration.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_cameracalibration_artificial.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_cameracalibration_badarg.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_cameracalibration_tilt.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_chessboardgenerator.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_chesscorners.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_chesscorners_badarg.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_chesscorners_timing.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_compose_rt.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_cornerssubpix.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_decompose_projection.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_filter_homography_decomp.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_fisheye.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_fundam.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_homography.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_homography_decomp.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_main.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_modelest.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_posit.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_reproject_image_to_3d.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_solvepnp_ransac.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_stereomatching.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_translation3d_estimator.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_undistort.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_undistort_badarg.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_undistort_points.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_usac.cpp",
+        "//third_party/opencv/modules/calib3d/test/test_chessboardgenerator.hpp",
+    ]
+    include_dirs = [
+        "//third_party/opencv/build",
+        "//third_party/opencv/build/opencv2",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/modules/calib3d/test",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/highgui/include",
+    ]
+    deps=[
+        "//third_party/opencv/modules/ts:libopencv_ts",
+        "//third_party/opencv/modules/calib3d:libopencv_calib3d",
+        "//third_party/opencv/modules/highgui:libopencv_highgui",
+        "//third_party/opencv/modules/features2d:libopencv_features2d",
+        "//third_party/opencv/modules/videoio:libopencv_videoio",
+        "//third_party/opencv/modules/imgcodecs:libopencv_imgcodecs",
+        "//third_party/opencv/modules/flann:libopencv_flann",
+        "//third_party/opencv/modules/imgproc:libopencv_imgproc",
+        "//third_party/opencv/modules/core:libopencv_core",
+        "//third_party/opencv/3rdparty/carotene:libtegra_hal",
+    ]
+    #relative_install_dir = "module"
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}

@@ -1,0 +1,59 @@
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# opencv 3rtparty protobuf build
+
+import("//build/ohos.gni")
+
+config("opencv_quirc_config") {
+    cflags_cc = [
+        "-fPIC",
+        "-std=c++11",
+        "-frtti",
+        "-Wno-delete-non-virtual-dtor",
+        "-Wno-unnamed-type-template-args",
+        "-Wno-comment",
+        "-Wno-deprecated-enum-enum-conversion",
+        "-Wno-deprecated-anon-enum-enum-conversion",
+        "-Wno-implicit-const-int-float-conversion",
+        "-Wno-undef",
+        "-Wno-strict-prototypes",
+        "-Wno-cast-function-type",
+        "-Wno-shadow",
+        "-Wno-unused-function",
+        "-mfloat-abi=softfp",
+        "-mfpu=neon-vfpv4",
+        "-pthread",
+    ]
+    defines = ["__ARM_NEON__",]
+}
+
+ohos_source_set("opencv_quirc_source") {
+    sources = [
+        "//third_party/opencv/3rdparty/quirc/src/decode.c",
+        "//third_party/opencv/3rdparty/quirc/src/quirc.c",
+        "//third_party/opencv/3rdparty/quirc/src/version_db.c",
+    ]
+    include_dirs = [
+        "//third_party/opencv/3rdparty/quirc/include",
+        "//third_party/opencv/build",
+    ]
+    configs = [ ":opencv_quirc_config" ]
+}
+
+ohos_static_library("libopencv_quirc") {
+    deps = [ ":opencv_quirc_source" ]
+    part_name = "opencv"
+    subsystem_name = "thirdparty"
+}
+
