@@ -11,7 +11,7 @@ Link：[OpenHarmony-SIG/third_party_opencv](https://gitee.com/openharmony-sig/th
 
 Put opencv under the `third_party` directory. Keep cautious about the directory name!
 
-Modify `vendor/hihope/config.json`. Add new component, opncv, under thirdparty subsystem and its corresponding information.
+Modify `vendor/hihope/RK3568/config.json`. Add new component, opncv, under thirdparty subsystem and its corresponding information.
 ``` json
 {
       "subsystem": "thirdparty",
