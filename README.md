@@ -3,6 +3,7 @@
  
 Pre-requisite：rk3568, OpenHarmony4.1 standard system，Compile on Ubuntu20.04 LTS
 
+**Current configuration _<u>only support OH in 32 bit!!!</u>_**
 1. Download OpenCV Library
 
 Link：[OpenHarmony-SIG/third_party_opencv](https://gitee.com/openharmony-sig/third_party_opencv)
